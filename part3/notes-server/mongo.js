@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
+const {info} = require("./utils/logger");
+
 
 if (process.argv.length < 3) {
-  console.log('give password as argument');
+  info('give password as argument');
   process.exit(1);
 }
 
-const password = process.argv[2];
-
-const url =
-  `mongodb+srv://maharjanlishu:${password}@cluster0.apz1g6l.mongodb.net/?retryWrites=true&w=majority`;
+const url = process.env.MONGODB_URI;
 
 mongoose.set('strictQuery',false);
 mongoose.connect(url);
@@ -25,7 +24,7 @@ const note = new Note({
   important: true,
 })
 
-note.save().then(result => {                    //note bata input garna note.save()
-  console.log('note saved!');
+note.save().then(() => {                    //note bata input garna note.save()
+  info('note saved!');
   mongoose.connection.close();
 })
