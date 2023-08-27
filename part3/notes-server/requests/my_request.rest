@@ -1,24 +1,5 @@
-###
-GET http://localhost:3001/api/notes
-content-type: application/json
 
-###
 GET http://localhost:3001/api/notes
 
-
-DELETE http://localhost:3001/api/notes/64d07149dfc0ef7e666322dd ### GET http://localhost:3001/api/notes ### GET http://localhost:3001/api/notes/64cfb0b3acf6c111fe8a5b58 ### POST http://localhost:3001/api/notes/ content-type: application/json
-
-{
-"content": "sample by prabesh", "important": false, "userId": "64d5ca5aa139ba23e084f42a"
-}
-
-### PUT http://localhost:3001/api/notes/64cca90539337328daf0dcf1 content-type: application/json
-
-{
-"content": "HTML is easy", "important": false
-}
-POST http://localhost:3001/api/users/ content-type: application/json
-
-{
-"name": "Prabesh Magar", "username": "prabesh3", "password": "password123"
-}
+###
+POST 
