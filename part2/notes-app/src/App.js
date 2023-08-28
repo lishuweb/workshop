@@ -8,6 +8,8 @@ const App = () => {
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState("");
+  console.log(newNote, "hello");
+  console.log(notes, "NOTESSS");
 
   useEffect(() => {
     let myAxiosData = functionName.getAll();
@@ -44,7 +46,6 @@ const App = () => {
   };
 
   const updateData = (id) => {
-
     let currentNote = notes.find((note) => {
       return note.id === id;
     });
@@ -66,8 +67,6 @@ const App = () => {
             setNotification("");
           }, 2000);
           
-          
-
           setNotes(notes.filter((note) => note.id !== currentNote.id));
         } 
         else 
@@ -81,7 +80,9 @@ const App = () => {
     <>
       <h1>Notes</h1>
 
-      <Notification message = {notification} />
+      <Notification 
+        message = {notification} 
+      />
 
       <button onClick={handleShowAll}>
         show {showAll ? "important" : "all"}

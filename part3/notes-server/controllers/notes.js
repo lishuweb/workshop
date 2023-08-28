@@ -65,7 +65,6 @@ const getTokenFrom = request => {
 
 app.post("/", async (request, response, next) => {
   const body = request.body;
-
   try 
   {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
