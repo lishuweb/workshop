@@ -12,10 +12,13 @@ const App = () => {
   useEffect(() => {
     let myAxiosData = functionName.getAll();
     myAxiosData.then((result) => {
-      result.push({ id: 1000, content: "this is fake note", important: true });
+      result.push({ 
+        id: 1000, content: "this is fake note", important: true 
+      });
       setNotes(result);
     });
  }, []);
+ 
   const notesToShow = notes.filter((note) => (showAll ? true : note.important));
 
   const handleSubmit = (event) => {
