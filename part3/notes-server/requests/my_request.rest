@@ -2,4 +2,14 @@
 GET http://localhost:3001/api/notes
 
 ###
-POST 
+GET http://localhost:3001/api/notes/64dc601bce0b7b2c0044bc86 
+
+###
+DELETE http://localhost:3001/api/notes/64dc601bce0b7b2c0044bc86
+
+###
+POST http://localhost:3001/api/users/ content-type: application/json
+
+{
+    "name": "Lishu Maharjan", "username": "lishu1", "password": "pass123"
+}

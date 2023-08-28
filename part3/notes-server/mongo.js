@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const {info} = require("./utils/logger");
 
 
-if (process.argv.length < 3) {
+if (process.argv.length < 3) 
+{
   info('give password as argument');
   process.exit(1);
 }

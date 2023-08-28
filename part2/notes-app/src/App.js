@@ -8,8 +8,6 @@ const App = () => {
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState("");
-  console.log(newNote, "hello");
-  console.log(notes, "NOTESSS");
 
   useEffect(() => {
     let myAxiosData = functionName.getAll();
@@ -19,7 +17,7 @@ const App = () => {
       });
       setNotes(result);
     });
- }, []);
+  }, []);
  
   const notesToShow = notes.filter((note) => (showAll ? true : note.important));
 
