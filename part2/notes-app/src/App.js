@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import Note from "./components/Note";
 import functionName from "./services/Notes";
 import Notification from "./components/Notification";
+import loginUser from "./services/login";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     let myAxiosData = functionName.getAll();
@@ -17,6 +21,12 @@ const App = () => {
       });
       setNotes(result);
     });
+
+    let myUser = window.localStorage.getItem("noteUser");
+    if(myUser)
+    {
+      setUser(JSON.parse(myUser));
+    }
   }, []);
  
   const notesToShow = notes.filter((note) => (showAll ? true : note.important));
@@ -28,11 +38,22 @@ const App = () => {
       important: Math.random() > 0.2,
     };
 
-    let myPromise = functionName.create(myNote);
+    let myPromise = functionName.create(myNote, user.token);
     myPromise.then((result) => {
       setNotes(notes.concat(result.data));
       setNewNote("");
-    });
+    })
+    .catch((e) => {
+      setNotification(e.response.data.error);
+      setTimeout(() => {
+        setNotification("");
+      }, 2000);
+      if(e.response.data.error === "token expired")
+      {
+        setUser(null);
+        window.localStorage.removeItem("noteUser");
+      }
+    })
   };
 
   const handleChange = (event) => {
@@ -74,12 +95,54 @@ const App = () => {
       });
   };
 
+  const handleLogin = async(event) => {
+    event.preventDefault();
+    try{
+      let loggedInUser = await loginUser.login({
+        username,
+        password,
+      });
+      setUser(loggedInUser);
+      window.localStorage.setItem("noteUser", JSON.stringify(loggedInUser));
+    }
+    catch(error)
+    {
+      setNotification(error.response.data.error);
+      setTimeout(() => {
+        setNotification("");
+      }, 2000);
+    }
+  };
+
+  const loginForm = () => {
+    return(
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+            <input type="text" value={username} name="Username" onChange={({target}) => setUsername(target.value)} />
+        </div>
+
+        <div>
+          password 
+          <input type="password" value={password} name="Password" onChange={({target}) => setPassword(target.value)} />
+        </div>
+          <button type="submit">Login</button>
+      </form>
+    )
+  }
+
+  const style = {fontSize: "50px"};
+
   return (
     <>
-      <h1>Notes</h1>
+      <h1 style = {style} className="redbackground">Notes</h1>
 
       <Notification 
         message = {notification} 
+      />
+
+      <login
+        login = {loginForm}
       />
 
       <button onClick={handleShowAll}>

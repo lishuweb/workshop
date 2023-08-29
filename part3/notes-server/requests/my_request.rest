@@ -8,8 +8,31 @@ GET http://localhost:3001/api/notes/64dc601bce0b7b2c0044bc86
 DELETE http://localhost:3001/api/notes/64dc601bce0b7b2c0044bc86
 
 ###
-POST http://localhost:3001/api/users/ content-type: application/json
+POST http://localhost:3001/api/notes/
+content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxpc2h1MSIsImlkIjoiNjRlZDc2NjVlYTkyN2Y3NjU2ZGEwNzNhIiwiaWF0IjoxNjkzMjg0OTc2LCJleHAiOjE2OTMyODg1NzZ9.DWbqdpAgEa3QOh_UUyXfvKFqd7G8QJQnBZqTl7ptahU
 
 {
-    "name": "Lishu Maharjan", "username": "lishu1", "password": "pass123"
+    "content": "sample by lishu",
+    "important": false,
+    "userId": "64ed7665ea927f7656da073a"
+}
+
+###
+POST http://localhost:3001/api/users/ 
+content-type: application/json
+
+{
+    "name": "Lishu Maharjan", 
+    "username": "lishu1", 
+    "password": "pass123"
+}
+
+###
+POST http://localhost:3001/api/login/ 
+content-type: application/json
+
+{
+    "username": "lishu1", 
+    "password": "pass123"
 }

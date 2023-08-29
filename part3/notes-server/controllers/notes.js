@@ -68,7 +68,8 @@ app.post("/", async (request, response, next) => {
   try 
   {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
-    if (!decodedToken.id) {
+    if (!decodedToken.id) 
+    {
       return response.status(401).json({ error: 'token invalid' })
     }
     const user = await User.findById(decodedToken.id);
@@ -76,7 +77,7 @@ app.post("/", async (request, response, next) => {
     const note = new Note({
       content: body.content,
       important: body.important || false,
-      user: user.id,
+      user: user._id,
     });
     
       const savedNote = await note.save();
@@ -84,7 +85,8 @@ app.post("/", async (request, response, next) => {
       user.notes = user.notes.concat(savedNote.id);
       await user.save();
   } 
-  catch (e) {
+  catch (e) 
+  {
     next(e);
   }
 });
