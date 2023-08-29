@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Note from "./components/Note";
 import functionName from "./services/Notes";
 import Notification from "./components/Notification";
-import loginUser from "./services/login";
+import loginService from "./services/login";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -22,10 +22,11 @@ const App = () => {
       setNotes(result);
     });
 
+    // getting user from localStorage if available
     let myUser = window.localStorage.getItem("noteUser");
     if(myUser)
     {
-      setUser(JSON.parse(myUser));
+      setUser(JSON.parse(myUser));    //JSON.parse - javascript object ma halxa
     }
   }, []);
  
@@ -48,6 +49,7 @@ const App = () => {
       setTimeout(() => {
         setNotification("");
       }, 2000);
+
       if(e.response.data.error === "token expired")
       {
         setUser(null);
@@ -95,55 +97,79 @@ const App = () => {
       });
   };
 
-  const handleLogin = async(event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    try{
-      let loggedInUser = await loginUser.login({
-        username,
-        password,
-      });
-      setUser(loggedInUser);
-      window.localStorage.setItem("noteUser", JSON.stringify(loggedInUser));
-    }
-    catch(error)
+    console.log("logging in with", username, password);
+    try
     {
-      setNotification(error.response.data.error);
+      let loggedinUser = await loginService.login(
+        {
+          username,
+          password,
+        }
+      )
+      setUser(loggedinUser);
+      window.localStorage.setItem("noteUser", JSON.stringify(loggedinUser));
+    }
+    catch (error) 
+    {
+      setNotification(
+        error.response.data.error
+      );
       setTimeout(() => {
         setNotification("");
       }, 2000);
-    }
+    } 
   };
 
   const loginForm = () => {
-    return(
+    return (
       <form onSubmit={handleLogin}>
         <div>
-          username
-            <input type="text" value={username} name="Username" onChange={({target}) => setUsername(target.value)} />
+          username 
+          <input 
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername( target.value )}
+          />
         </div>
-
         <div>
           password 
-          <input type="password" value={password} name="Password" onChange={({target}) => setPassword(target.value)} />
+          <input 
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
         </div>
-          <button type="submit">Login</button>
+          <button type="submit">login</button>
       </form>
     )
-  }
+  };
 
-  const style = {fontSize: "50px"};
+  const noteForm = () => {
+    return (
+      <form onSubmit={handleSubmit}>
+        <input value={newNote} onChange={handleChange} />
+        <button>Submit</button>
+      </form>
+    )
+  };
+
+  const style = { fontSize: "60px" };
 
   return (
     <>
-      <h1 style = {style} className="redbackground">Notes</h1>
+      <h1 style = {style} className="redbackground">
+        Notes
+      </h1>
 
       <Notification 
         message = {notification} 
       />
 
-      <login
-        login = {loginForm}
-      />
+      { user === null ? loginForm() : noteForm() }
 
       <button onClick={handleShowAll}>
         show {showAll ? "important" : "all"}
@@ -161,10 +187,8 @@ const App = () => {
           );
         })}
       </ul>
-      <form onSubmit={handleSubmit}>
-        <input value={newNote} onChange={handleChange} />
-        <button>Submit</button>
-      </form>
+      
+      { noteForm }
     </>
   );
 };
