@@ -9,7 +9,6 @@ import NoteForm from "./components/NoteForm";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState("");
   const [username, setUsername] = useState("");
@@ -37,19 +36,12 @@ const App = () => {
  
   const notesToShow = notes.filter((note) => (showAll ? true : note.important));
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let myNote = {
-      content: newNote,
-      important: Math.random() > 0.2,
-    };
-
+  const handleSubmit = (newNote) => {
     noteFormRef.current.toggleVisibility(); 
-
-    let myPromise = functionName.create(myNote, user.token);
-    myPromise.then((result) => {
+    let myPromise = functionName.create(newNote, user.token);
+    myPromise
+      .then((result) => {
       setNotes(notes.concat(result.data));
-      setNewNote("");
     })
     .catch((e) => {
       setNotification(e.response.data.error);
@@ -63,11 +55,6 @@ const App = () => {
         window.localStorage.removeItem("noteUser");
       }
     })
-  };
-
-  const handleChange = (event) => {
-    console.log(event, "Event")
-    setNewNote(event.target.value);
   };
 
   const handleShowAll = () => {
@@ -153,8 +140,6 @@ const App = () => {
       <Togglable buttonLabel = "new note" ref = {noteFormRef}>
         <NoteForm 
           onSubmit = {handleSubmit}
-          value = {newNote}
-          handleChange = {handleChange}
         />
       </Togglable>
     )

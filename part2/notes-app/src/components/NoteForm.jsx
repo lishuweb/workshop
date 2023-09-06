@@ -1,13 +1,31 @@
-const noteForm = ({ onSubmit, handleChange, value }) => {
-    return (
-      <form onSubmit = { onSubmit }>
+import { useState } from "react";
+
+const NoteForm = ({ onSubmit }) => {
+  const [newNote, setNewNote] = useState(""); 
+
+  const mySubmit = (e) => {
+    e.preventDefault();
+    onSubmit(
+      {
+        content: newNote,
+        important: Math.random() > 0.5,
+      }
+    );
+  }
+  
+  return (
+      <form onSubmit = { mySubmit }>
         <input 
-            value = { value } 
-            onChange = { handleChange } 
+            className="something"
+            placeholder="enter something here"
+            value = { newNote } 
+            onChange = {(e) => {
+              setNewNote(e.target.value);
+            }} 
         />
-        <button>Submit</button>
+        <button type="submit">save</button>
       </form>
     )
   };
 
-  export default noteForm;
+  export default NoteForm;
