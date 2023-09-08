@@ -1,10 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// import { useState } from "react";
+import NoteForm from "./components/NoteForm";
+import Notes from "./components/Notes";
+import VisibilityFilter from "./components/VisibilityFilter";
 
-function App() {
+const App = () => {
+
+  // const [filter, setFilter] = useState("ALL");
+
   return (
-    <h1>hello</h1>
-  );
+    <div>
+      <VisibilityFilter />
+      <NoteForm />
+      <Notes />
+    </div>
+  )
 }
 
 export default App;
