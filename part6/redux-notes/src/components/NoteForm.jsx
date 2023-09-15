@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createNote } from "../reducers/noteReducer";
-import notesService from "../services/notes";
+import { makeNote } from "../reducers/noteReducer";
 
 const NoteForm = () => {
 
@@ -14,9 +13,7 @@ const NoteForm = () => {
           important: true,
           id: notes.length + 1,
         };
-        notesService.createNew(newNote).then((myNote) => {
-            dispatch(createNote(myNote));;
-        });
+        dispatch(makeNote(newNote));
         event.target.myInput.value = "";
     };
 

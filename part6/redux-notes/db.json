@@ -1,14 +1,39 @@
 {
-    "notes": [
-        {
-            "content": "the app is in redux store",
-            "important": true,
-            "id": 1
-        },
-        {
-            "content": "state changes are made with actions",
-            "important": false,
-            "id": 2
-        }
-    ]
+  "notes": [
+    {
+      "content": "the app is in redux store",
+      "important": true,
+      "id": 1
+    },
+    {
+      "content": "state changes are made with actions",
+      "important": false,
+      "id": 2
+    },
+    {
+      "content": "this is new note",
+      "important": true,
+      "id": 3
+    },
+    {
+      "content": "hello tej ",
+      "important": true,
+      "id": 4
+    },
+    {
+      "content": "this is lshu",
+      "important": true,
+      "id": 5
+    },
+    {
+      "content": "hi i am me",
+      "important": true,
+      "id": 6
+    },
+    {
+      "content": "hey how you feeling today",
+      "important": true,
+      "id": 7
+    }
+  ]
 }
