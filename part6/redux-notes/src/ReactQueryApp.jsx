@@ -3,19 +3,23 @@ import { getNotes, createNote, updateNote } from "./request";
 
 const App = () => {
 
+    const queryClient = useQueryClient();
+
     const result = useQuery({
         queryKey: ['notes'],
         queryFn: getNotes,
+        refetchOnWindowsFocus: false,
     });
     const newNoteMutation = useMutation(createNote, {
-        onSuccess: () => {
-            useQueryClient.invalidateQueries({ queryKey: ["notes"] });
+        onSuccess: (myNote) => {
+          const notes = queryClient.getQueryData(['notes']);
+          queryClient.setQueryData(['notes'], notes.concat(myNote));
         },
     });
 
     const updateNoteMutation = useMutation(updateNote, {
         onSuccess: () => {
-            useQueryClient.invalidateQueries('notes');
+            queryClient.invalidateQueries({ queryKey: ["notes"] });
         },
     });
 
@@ -30,7 +34,7 @@ const App = () => {
   
     const toggleImportance = (note) => {
       console.log('toggle importance of', note.id);
-      updateNoteMutation.mutate(note);
+      updateNoteMutation.mutate({ ...note, important: !note.important });
     };
   
     console.log(JSON.parse(JSON.stringify(result)));
