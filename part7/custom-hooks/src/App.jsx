@@ -1,8 +1,8 @@
 import useCounter from "./hooks/useCounter";
 
 const App = () => {
-  const counter1 = useCounter(0);
-  const counter2 = useCounter(0);
+  const counter1 = useCounter();
+  const counter2 = useCounter();
 
   return (
     <>
