@@ -3,6 +3,9 @@ import { Routes, Route, Link, Navigate, useMatch } from "react-router-dom";
 import Notes from "./Notes";
 import Note from "./Note";
 import Login from "./Login";
+// import { Navbar, Nav } from "react-bootstrap";
+// import { Container, Alert, AppBar, Toolbar, Button } from '@mui/material';
+import { Footer, Navigation, Page, Alert } from "./components/Button";
 
 const notes = [
   {
@@ -66,29 +69,18 @@ const App = () => {
   };
 
   return (
-    <>
-
-      <div>
-
-        <Link style = {padding} to = "/">
-          home  
-        </Link>
-        <Link style = {padding} to = "/notes">
-          notes
-        </Link>
-        <Link style = {padding} to = "/users">
-          users
-        </Link>
-        {user ? (
-          <em> {user} logged in</em>
-          ) : (
-            <Link style = {padding} to = "/login">
-              login
-            </Link>
-          ) 
+    <Page>
+      <Navigation>
+        <Link style={padding} to="/">Home</Link>
+        <Link style={padding} to="/notes">Notes</Link>
+        <Link style={padding} to="/users">Users</Link>
+        {user
+          ? <Alert variant = "sucsess">
+              {user} logged in
+            </Alert>
+          : <Link style={padding} to="/login">Login</Link>
         }
-
-      </div>
+      </Navigation>
 
       <Routes>
         <Route path = "/notes/:id" element = {<Note note = {note} />} />
@@ -101,11 +93,11 @@ const App = () => {
         <Route path = "/" element = {<Home />} />
       </Routes>
 
-      <div>
+      <Footer>
         <i>Note app, Department of Computer Science 2023</i>
-      </div>
+      </Footer>
+    </Page>
 
-    </>
   );
 };
 export default App;
