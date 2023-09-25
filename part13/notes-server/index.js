@@ -76,7 +76,7 @@ app.put("/api/notes/:id", async(req, res) => {
     }
     else 
     {
-        res.status(404).end();
+        res.status(404).send("no code available");
     }
 });
 
