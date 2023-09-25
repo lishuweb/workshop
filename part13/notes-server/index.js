@@ -9,8 +9,8 @@ app.use(express.json());
 const sequelize = new Sequelize(process.env.DB_URL, {  //DB_URL ko sabai variable yeta aauxa
     dialectOptions: {
         ssl: {
-        require: true,
-        rejectUnauthorized: false
+            require: true,
+            rejectUnauthorized: false
         }
     },
 });
