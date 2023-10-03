@@ -13,3 +13,23 @@ content-type: application/json
 {
     "important": false
 }
+
+###
+POST http://localhost:3001/api/users/
+content-type: application/json
+
+{
+    "username": "tejfellow",
+    "name": "Lishu"
+}
+
+###
+POST http://localhost:3001/api/login/
+content-type: application/json
+
+{
+    "username": "tejfellow",
+    "password": "secret"
+} 
+
+
