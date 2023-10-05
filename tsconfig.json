@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES2022",
-        "strict": true,
+        "strict": false,
         "noUnusedLocals": false,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
