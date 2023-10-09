@@ -9,6 +9,7 @@ interface Note {
 const App = () => {
     const [newNote, setNewNote] = useState("");
     const [notes, setNotes] = useState<Note[]>([]);
+    console.log(notes, "hihdiedied");
 
     useEffect(() => {
         axios.get<Note[]>("http://localhost:3001/notes")
